@@ -6,10 +6,10 @@ import MealItem from "../components/MealItem";
 import { CATEGORIES, MEALS } from "../data/dummy-data";
 import { StackParamList } from "../types/react-navigation";
 
-type Props = NativeStackScreenProps<StackParamList, "MealOverview">;
+type MealProps = NativeStackScreenProps<StackParamList, "MealOverview">;
 
-type PropsRoute = Props["route"];
-const MealsOverview = ({ navigation, route }: Props) => {
+type PropsRoute = MealProps["route"];
+const MealsOverview = ({ navigation, route }: MealProps) => {
   const router = useRoute<PropsRoute>();
   const catId = router.params.categoryId;
 
@@ -32,6 +32,7 @@ const MealsOverview = ({ navigation, route }: Props) => {
         keyExtractor={(item) => item.id}
         renderItem={(itemData) => (
           <MealItem
+            id={itemData.item.id}
             complexity={itemData.item.complexity}
             imgUrl={itemData.item.imageUrl}
             title={itemData.item.title}
@@ -49,5 +50,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export { Props };
+export { MealProps };
 export default MealsOverview;

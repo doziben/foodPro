@@ -1,7 +1,7 @@
 type StackParamList = {
-  MealOverview: { categoryId: string[] };
+  MealOverview: { categoryId: string };
   MealCategories: undefined;
-  MealDetails: { cetagoryId: string[] } | undefined;
+  MealDetails: { mealId: string } | undefined;
 };
 
 export { StackParamList };

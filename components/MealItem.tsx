@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -6,21 +7,26 @@ import {
   Image,
   GestureResponderEvent,
 } from "react-native";
+import { MealProps } from "../screens/MealsOverview";
 import colors from "../utils/colors";
 
 interface Props {
+  id: string;
   title: string;
   imgUrl: string;
   complexity: string;
 }
 
-const MealItem = ({ title, imgUrl, complexity }: Props) => {
-  const PressHandler = (e: GestureResponderEvent) => {};
+const MealItem = ({ title, imgUrl, complexity, id }: Props) => {
+  const navigation = useNavigation<MealProps["navigation"]>();
+  const PressHandler = (mealId: string) => {
+    navigation.navigate("MealDetails", { mealId: mealId });
+  };
 
   return (
     <View style={styles.wrapper}>
       <Pressable
-        onPress={PressHandler}
+        onPress={PressHandler.bind(this, id)}
         style={({ pressed }) => [pressed && styles.pressed]}
       >
         <View>
