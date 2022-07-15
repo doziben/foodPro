@@ -1,5 +1,15 @@
+import Ionicons from "@expo/vector-icons/Feather";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { View, Text, ScrollView, Image, StyleSheet } from "react-native";
+import { useLayoutEffect } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  StyleSheet,
+  Alert,
+  Pressable,
+} from "react-native";
 import CardWrapper, { CardHeading } from "../components/CardWrapper";
 import ListItem from "../components/ListItem";
 import { MEALS } from "../data/dummy-data";
@@ -18,8 +28,6 @@ const MealDetails = ({ navigation, route }: DetailsProp) => {
   const lastText = title.split(" ").pop();
   const firstText = title.replace(lastText!, "");
 
-  const mealTitle = `${firstText} ${lastText}`;
-
   const ingredients = mealIngredients.map((ing) => (
     <ListItem content={ing} key={ing} />
   ));
@@ -27,6 +35,27 @@ const MealDetails = ({ navigation, route }: DetailsProp) => {
   const recipe = mealRecipes.map((recipe) => (
     <ListItem content={recipe} key={recipe} />
   ));
+
+  const onSaveMeal = () => {
+    Alert.alert(`Meal Saved`, `You saved ${title} to favorites!`, [
+      { text: "Okay Thanks!", style: "cancel" },
+    ]);
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <Pressable
+            onPress={onSaveMeal}
+            style={({ pressed }) => pressed && { opacity: 0.5 }}
+          >
+            <Ionicons name="bookmark" size={24} color={"white"} />
+          </Pressable>
+        );
+      },
+    });
+  }, [navigation, onSaveMeal]);
 
   return (
     <ScrollView style={styles.wrapper}>
